@@ -1,6 +1,6 @@
 
 
-cc.Class({
+var Zombie = cc.Class({
     extends: cc.Component,
 
     properties: {
@@ -8,6 +8,7 @@ cc.Class({
         defense: 1,
         attack: 3,
         speed: 10,
+        position: cc.v2(0,0),
     },
 
     zombieMove(){
@@ -20,7 +21,7 @@ cc.Class({
         .repeatForever()
         .start()
     },
-
+    
     onLoad () {
         
     },
@@ -29,7 +30,6 @@ cc.Class({
         this.zombieMove();
     },
     update (dt) {
-        console.log(this.node.x);
         if(this.node.x <= 100){
             this.move.stop();
         }
