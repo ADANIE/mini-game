@@ -78,13 +78,13 @@
         "__id__": 8
       },
       {
-        "__id__": 10
+        "__id__": 12
       }
     ],
     "_active": true,
     "_components": [
       {
-        "__id__": 12
+        "__id__": 14
       }
     ],
     "_prefab": null,
@@ -174,7 +174,7 @@
       "array": [
         0,
         0,
-        247.62932748899524,
+        178.40123317959439,
         0,
         0,
         0,
@@ -369,6 +369,12 @@
     "_components": [
       {
         "__id__": 9
+      },
+      {
+        "__id__": 10
+      },
+      {
+        "__id__": 11
       }
     ],
     "_prefab": null,
@@ -435,7 +441,7 @@
     "_srcBlendFactor": 770,
     "_dstBlendFactor": 771,
     "_spriteFrame": {
-      "__uuid__": "072d32ae-192f-42f0-8561-8dee00f8c86b"
+      "__uuid__": "52670655-0883-4ad8-89c7-41a0b01c759b"
     },
     "_type": 0,
     "_sizeMode": 0,
@@ -452,6 +458,39 @@
     "_id": "0aCZeZHmRMKaU1YXmkCGQ6"
   },
   {
+    "__type__": "5ae54ZTjPVOjqqdysgwTZpd",
+    "_name": "",
+    "_objFlags": 0,
+    "node": {
+      "__id__": 8
+    },
+    "_enabled": true,
+    "hp": 100,
+    "defense": 1,
+    "attack": 3,
+    "speed": 10,
+    "_id": "d5iRzBaLNJF42N6hae5GEx"
+  },
+  {
+    "__type__": "cc.Animation",
+    "_name": "",
+    "_objFlags": 0,
+    "node": {
+      "__id__": 8
+    },
+    "_enabled": true,
+    "_defaultClip": {
+      "__uuid__": "a67c51c3-513b-4ea9-9e30-c1e9d94fd615"
+    },
+    "_clips": [
+      {
+        "__uuid__": "a67c51c3-513b-4ea9-9e30-c1e9d94fd615"
+      }
+    ],
+    "playOnLoad": true,
+    "_id": "86tVR5ygZPAZ7uzE7QPIoP"
+  },
+  {
     "__type__": "cc.Node",
     "_name": "bow",
     "_objFlags": 0,
@@ -462,7 +501,7 @@
     "_active": true,
     "_components": [
       {
-        "__id__": 11
+        "__id__": 13
       }
     ],
     "_prefab": null,
@@ -518,7 +557,7 @@
     "_name": "",
     "_objFlags": 0,
     "node": {
-      "__id__": 10
+      "__id__": 12
     },
     "_enabled": true,
     "_materials": [
