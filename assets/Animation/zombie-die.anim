@@ -1,0 +1,89 @@
+{
+  "__type__": "cc.AnimationClip",
+  "_name": "zombie-die",
+  "_objFlags": 0,
+  "_native": "",
+  "_duration": 0.8,
+  "sample": 10,
+  "speed": 1,
+  "wrapMode": 1,
+  "curveData": {
+    "comps": {
+      "cc.Sprite": {
+        "spriteFrame": [
+          {
+            "frame": 0,
+            "value": {
+              "__uuid__": "a1c67d12-a047-46cf-b24a-47edf6e7fa86"
+            }
+          },
+          {
+            "frame": 0.1,
+            "value": {
+              "__uuid__": "164691b9-afde-484f-99db-2bf0b03d0379"
+            }
+          },
+          {
+            "frame": 0.2,
+            "value": {
+              "__uuid__": "30c3a000-18b9-4112-bd8d-00156a67da7d"
+            }
+          },
+          {
+            "frame": 0.3,
+            "value": {
+              "__uuid__": "508c5e8a-61b8-4231-bab9-cdf5020ee878"
+            }
+          },
+          {
+            "frame": 0.4,
+            "value": {
+              "__uuid__": "7deefbe7-ec7e-47ee-9b78-32e945e7c42d"
+            }
+          },
+          {
+            "frame": 0.5,
+            "value": {
+              "__uuid__": "19d40bd6-16b4-4a04-adcc-1ff2e2fc09ba"
+            }
+          },
+          {
+            "frame": 0.6,
+            "value": {
+              "__uuid__": "609ab2b2-a7e8-4dd0-b3bf-1ae72b52091d"
+            }
+          },
+          {
+            "frame": 0.7,
+            "value": {
+              "__uuid__": "d2c0c3e5-5128-4e90-844f-822a22922936"
+            }
+          }
+        ]
+      }
+    },
+    "props": {
+      "width": [
+        {
+          "frame": 0,
+          "value": 100
+        },
+        {
+          "frame": 0.8,
+          "value": 200
+        }
+      ],
+      "height": [
+        {
+          "frame": 0,
+          "value": 150
+        },
+        {
+          "frame": 0.8,
+          "value": 30
+        }
+      ]
+    }
+  },
+  "events": []
+}

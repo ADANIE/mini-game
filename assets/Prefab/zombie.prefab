@@ -27,10 +27,13 @@
       },
       {
         "__id__": 4
+      },
+      {
+        "__id__": 5
       }
     ],
     "_prefab": {
-      "__id__": 5
+      "__id__": 6
     },
     "_opacity": 255,
     "_color": {
@@ -47,14 +50,14 @@
     },
     "_anchorPoint": {
       "__type__": "cc.Vec2",
-      "x": 0.5,
-      "y": 0.5
+      "x": 0,
+      "y": 0
     },
     "_trs": {
       "__type__": "TypedArray",
       "ctor": "Float64Array",
       "array": [
-        576.063,
+        564.824,
         167.337,
         0,
         0,
@@ -112,25 +115,6 @@
     "_id": ""
   },
   {
-    "__type__": "5ae54ZTjPVOjqqdysgwTZpd",
-    "_name": "",
-    "_objFlags": 0,
-    "node": {
-      "__id__": 1
-    },
-    "_enabled": true,
-    "hp": 100,
-    "defense": 1,
-    "attack": 3,
-    "speed": 10,
-    "position": {
-      "__type__": "cc.Vec2",
-      "x": 0,
-      "y": 0
-    },
-    "_id": ""
-  },
-  {
     "__type__": "cc.Animation",
     "_name": "",
     "_objFlags": 0,
@@ -139,14 +123,58 @@
     },
     "_enabled": true,
     "_defaultClip": {
-      "__uuid__": "a67c51c3-513b-4ea9-9e30-c1e9d94fd615"
+      "__uuid__": "db0c889b-a7dc-44f4-8652-028f5db251d6"
     },
     "_clips": [
       {
         "__uuid__": "a67c51c3-513b-4ea9-9e30-c1e9d94fd615"
+      },
+      {
+        "__uuid__": "db0c889b-a7dc-44f4-8652-028f5db251d6"
       }
     ],
-    "playOnLoad": true,
+    "playOnLoad": false,
+    "_id": ""
+  },
+  {
+    "__type__": "cc.BoxCollider",
+    "_name": "",
+    "_objFlags": 0,
+    "node": {
+      "__id__": 1
+    },
+    "_enabled": true,
+    "tag": 1,
+    "_offset": {
+      "__type__": "cc.Vec2",
+      "x": 60,
+      "y": 61
+    },
+    "_size": {
+      "__type__": "cc.Size",
+      "width": 20,
+      "height": 40
+    },
+    "_id": ""
+  },
+  {
+    "__type__": "5ae54ZTjPVOjqqdysgwTZpd",
+    "_name": "",
+    "_objFlags": 0,
+    "node": {
+      "__id__": 1
+    },
+    "_enabled": true,
+    "hp": 20,
+    "defense": 1,
+    "attack": 3,
+    "speed": 10,
+    "dodge": 10,
+    "position": {
+      "__type__": "cc.Vec2",
+      "x": 0,
+      "y": 0
+    },
     "_id": ""
   },
   {
