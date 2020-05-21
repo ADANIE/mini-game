@@ -3,10 +3,10 @@
   "_name": "bow_attack",
   "_objFlags": 0,
   "_native": "",
-  "_duration": 2.2,
+  "_duration": 1.1,
   "sample": 10,
   "speed": 1,
-  "wrapMode": 2,
+  "wrapMode": 1,
   "curveData": {
     "comps": {
       "cc.Sprite": {
@@ -18,31 +18,31 @@
             }
           },
           {
-            "frame": 0.4,
+            "frame": 0.2,
             "value": {
               "__uuid__": "2d590bff-9f3d-4014-81ce-6e074c81a2da"
             }
           },
           {
-            "frame": 0.8,
+            "frame": 0.4,
             "value": {
               "__uuid__": "fa1ce9ec-f109-4d4c-a6ea-782e1c4d6fb7"
             }
           },
           {
-            "frame": 1.2,
+            "frame": 0.6,
             "value": {
               "__uuid__": "81290d86-e985-4115-8be7-4ba9d02b0f29"
             }
           },
           {
-            "frame": 1.6,
+            "frame": 0.8,
             "value": {
               "__uuid__": "0b87e52e-0e4a-44ff-8ad8-fbc147843110"
             }
           },
           {
-            "frame": 2.1,
+            "frame": 1,
             "value": {
               "__uuid__": "33efcc61-265c-4157-b304-c9d63559d3ab"
             }
@@ -51,47 +51,45 @@
       }
     },
     "props": {
-      "position": [],
-      "height": [],
       "width": [
         {
-          "frame": 0.3,
+          "frame": 0.1,
           "value": 46
         },
         {
-          "frame": 0.4,
+          "frame": 0.2,
           "value": 66
+        },
+        {
+          "frame": 0.3,
+          "value": 66
+        },
+        {
+          "frame": 0.4,
+          "value": 86
+        },
+        {
+          "frame": 0.5,
+          "value": 86
+        },
+        {
+          "frame": 0.6,
+          "value": 106
         },
         {
           "frame": 0.7,
-          "value": 66
+          "value": 106
         },
         {
           "frame": 0.8,
-          "value": 86
-        },
-        {
-          "frame": 1.1,
-          "value": 86
-        },
-        {
-          "frame": 1.2,
-          "value": 106
-        },
-        {
-          "frame": 1.5,
-          "value": 106
-        },
-        {
-          "frame": 1.6,
           "value": 126
         },
         {
-          "frame": 1.9,
+          "frame": 0.9,
           "value": 126
         },
         {
-          "frame": 2.1,
+          "frame": 1,
           "value": 46
         }
       ]

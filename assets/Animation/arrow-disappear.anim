@@ -1,22 +1,22 @@
 {
   "__type__": "cc.AnimationClip",
-  "_name": "arrow-attack",
+  "_name": "arrow-disappear",
   "_objFlags": 0,
   "_native": "",
-  "_duration": 1.1,
-  "sample": 10,
+  "_duration": 1,
+  "sample": 60,
   "speed": 1,
   "wrapMode": 1,
   "curveData": {
     "props": {
-      "x": [
+      "opacity": [
         {
           "frame": 0,
-          "value": -488
+          "value": 255
         },
         {
-          "frame": 1.1,
-          "value": -568
+          "frame": 1,
+          "value": 0
         }
       ]
     }

@@ -168,8 +168,11 @@
     "hp": 20,
     "defense": 1,
     "attack": 3,
-    "speed": 10,
+    "speed": 50,
     "dodge": 10,
+    "glod": 15,
+    "points": 30,
+    "roadLabel": 1,
     "position": {
       "__type__": "cc.Vec2",
       "x": 0,
