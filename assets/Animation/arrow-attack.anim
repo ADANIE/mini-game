@@ -1,0 +1,89 @@
+{
+  "__type__": "cc.AnimationClip",
+  "_name": "arrow-attack",
+  "_objFlags": 0,
+  "_native": "",
+  "_duration": 2.2,
+  "sample": 10,
+  "speed": 1,
+  "wrapMode": 2,
+  "curveData": {
+    "props": {
+      "position": [
+        {
+          "frame": 0.4,
+          "value": [
+            -468,
+            254,
+            0
+          ]
+        },
+        {
+          "frame": 0.5,
+          "value": [
+            -478,
+            254,
+            0
+          ]
+        },
+        {
+          "frame": 0.9,
+          "value": [
+            -478,
+            254,
+            0
+          ]
+        },
+        {
+          "frame": 1,
+          "value": [
+            -488,
+            254,
+            0
+          ]
+        },
+        {
+          "frame": 1.4,
+          "value": [
+            -488,
+            254,
+            0
+          ]
+        },
+        {
+          "frame": 1.5,
+          "value": [
+            -498,
+            254,
+            0
+          ]
+        },
+        {
+          "frame": 1.8,
+          "value": [
+            -498,
+            254,
+            0
+          ]
+        },
+        {
+          "frame": 1.9,
+          "value": [
+            -508,
+            254,
+            0
+          ]
+        },
+        {
+          "frame": 2.2,
+          "value": [
+            -398,
+            254,
+            0
+          ]
+        }
+      ]
+    }
+  },
+  "events": []
+}
