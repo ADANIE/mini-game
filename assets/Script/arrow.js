@@ -24,13 +24,13 @@ var Arrow = cc.Class({
         this.anim.play("arrow-disappear");
         this.node.x += 100;
         this.arrowMove.stop();
+        this.node.group="default";
         
     },
     onCollisionStay: function (other, self) {
         
     },
     onCollisionExit: function (other, self) {
-        this.manager.enabled = false;
         this.schedule(()=>{
             this.node.active = false;
         },0,0,2)
