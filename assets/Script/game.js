@@ -9,6 +9,10 @@ cc.Class({
 
     properties: {
         zombiePrefab: cc.Prefab,
+        gameOverNode: {
+            default: null,
+            type: cc.Node
+        },
     },
 
     initPosition(){
@@ -96,4 +100,9 @@ cc.Class({
         this.node.off("zombie-die");
     },
 
+    gameOver: function () {
+        //show gameover label
+        this.gameOverNode.active = true;
+        //destroy all zombies and arrows
+    },
 });

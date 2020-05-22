@@ -22,6 +22,7 @@ var Arrow = cc.Class({
 
     onCollisionEnter (other, self) {
         this.anim.play("arrow-disappear");
+        this.node.x += 100;
         this.arrowMove.stop();
         
     },
