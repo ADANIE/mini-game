@@ -16,6 +16,7 @@ cc.Class({
         bowPrefab: cc.Prefab,
         arrowPrefab: cc.Prefab,
         attackspeed: 5,//用于控制射速
+        //之后可以给每一个弓单独设置一个攻击速度，这样可以对每一个弓进行单独的升级射速的操作。
     },
     //三路僵尸的初始生成位置，横坐标和弓的初始位置相同
     initPosition(){
@@ -81,36 +82,6 @@ cc.Class({
         }, 1, ROADCOUNT-1, 0);
     },
 
-    createArrow(parentNode)
-    {
-        let apperRoad = [];
-        for (let i = 0; i < ROADCOUNT; ++i) {
-            apperRoad[i] = i;
-        }
-        let i = 0;
-        this.schedule(()=>{
-            let arrow = this.arrowPool.get();
-            if (arrow == null){
-                arrow = cc.instantiate(this.arrowPrefab);
-            }
-            arrow.parent = parentNode;
-            //alert(4);
-            //alert(this.arrowposition);
-            //alert(this.position);
-            arrow.setPosition(this.arrowposition[apperRoad[i]]);
-            i++;
-        }, 1, ROADCOUNT-1, 0);
-    },
-
-    createArrowbytime() {
-        this.schedule(()=>{
-            if (this.pause == true) {
-                this.unscheduleAllCallbacks();
-            }
-            this.createArrow(this.node);
-        }, this.attackspeed, 1e+8, 1);
-    },
-
     // create zombie by random interval
     CreateZomByRandInt () {
         let count = 0;
@@ -124,7 +95,7 @@ cc.Class({
             count++;
         }, appearInterval, 1e+8, 1);
     },
-    
+
     onLoad () {
         this.init();
         this.node.on("zombie-die", (event)=>{
@@ -137,9 +108,42 @@ cc.Class({
         });
     },
 
+    CreateArrow(parentNode)
+    {
+        let apperRoad = [];
+        for (let i = 0; i < ROADCOUNT; ++i) {
+            apperRoad[i] = i;
+            let arrow = this.arrowPool.get();
+            if (arrow == null){
+                arrow = cc.instantiate(this.arrowPrefab);
+            }
+            arrow.parent = parentNode;
+            arrow.setPosition(this.arrowposition[apperRoad[i]]);
+        }
+    },//同时生成三条路的箭。
+
+    DecoratorOfArrow()
+    {
+        this.CreateArrow(this.node);
+    },//用于回调函数的参数传递。没有装饰器，回调参数无法将parentNode这一参数传入。
+
+    IncreaseAttackSpeed(recallfuc,num){
+        //appearInterval变量控制射击间隔，它的倒数即为射速。
+        //建议每次升级射速的幅度为1以下。
+        let atkspd=1/this.attackspeed;
+        atkspd+=num;
+        this.attackspeed=1/atkspd; 
+        alert(atkspd);
+        alert(this.attackspeed);
+        alert(recallfuc);
+        this.schedule(recallfuc,this.attackspeed,1e8,0);
+    },//提升攻击速度。传入参数num的单位为次/s，如0.5次/秒
+
     start () {
         this.CreateZomByRandInt();
-        this.createArrowbytime();
+        let CreateArrowByTime=this.DecoratorOfArrow;
+        this.schedule(CreateArrowByTime,this.attackspeed,1e8,0);
+        this.IncreaseAttackSpeed(CreateArrowByTime,0.1);
     },
 
     update (dt) {
@@ -155,4 +159,5 @@ cc.Class({
         this.gameOverNode.active = true;
         //destroy all zombies and arrows
     },
+
 });

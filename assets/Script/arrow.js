@@ -4,7 +4,7 @@ var Arrow = cc.Class({
 
     properties: {
         attack: 10,
-        speed: 100,
+        speed: 200,
         position: cc.v2(0,0),
     },
 
