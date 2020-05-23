@@ -1,4 +1,3 @@
-
 var Zombie = cc.Class({
     extends: cc.Component,
 
@@ -17,7 +16,11 @@ var Zombie = cc.Class({
 
     init(){
         this.hp = 30;
+        this.node.width = 100;
+        this.node.height = 150;
+        this.roadLabel =  1;
         this.stopSignal = false;
+        this.node.setPosition(cc.v2(1280, 50));
     },
 
     propertiesGrow(times){
@@ -32,23 +35,33 @@ var Zombie = cc.Class({
     zombieMove(){
         this.anim.play("zombie-walk");
 
-        this.move = cc.tween(this.node)
+        this.move
         .by(1, {
             position: cc.v2(-this.speed, 0),
         })
         .repeatForever()
         .start();
-
-        
-
     },
 
     onAttacked(){
         this.anim.pause("zombie-walk");
         this.move.stop();
-        let arrow = cc.find("Canvas/arrow").getComponent("arrow");
-        this.hp -= arrow.attack;
-        this.node.x += 100;
+        let arrow = cc.find("Canvas/road_"+ this.roadLabel + "/arrow").getComponent("arrow");
+        if (arrow != null) {
+            this.hp -= arrow.attack;
+            this.move = cc.tween(this.node)
+            .by(1,{
+                position: cc.v2(100, 0),
+            })
+            .start();
+            this.node.x += 100;
+            if (this.hp <= 0) {
+                this.onKilled();
+            } else {
+                this.anim.resume("zombie-walk");
+                this.zombieMove();
+            }
+        }
         
     },
 
@@ -57,19 +70,23 @@ var Zombie = cc.Class({
         this.move.stop();
         this.anim.play("zombie-die");
         this.hp = 0;
-        let dieEvent = new cc.Event.EventCustom("zombie-die", true);
-        this.node.dispatchEvent(dieEvent);
         let pointsNum = cc.find("Canvas/header/points/num").getComponent(cc.Label);
         let goldNum = cc.find("Canvas/header/gold/goldCount").getComponent(cc.Label);
         pointsNum.string = parseInt(pointsNum.string) +  this.points;
-        goldNum.string = parseInt(goldNum.string)+ this.glod
+        goldNum.string = parseInt(goldNum.string)+ this.glod;
+    },
+
+    sendRecoveryMessage () {
+        let dieEvent = new cc.Event.EventCustom("zombie-die", true);
+        this.node.dispatchEvent(dieEvent);
     },
     
     onLoad () {
         var manager = cc.director.getCollisionManager();
         manager.enabled = true;
         this.anim = this.node.getComponent(cc.Animation);
-        this.init();
+        this.move = cc.tween(this.node);
+        
     },
 
     start () {
@@ -80,27 +97,15 @@ var Zombie = cc.Class({
         this.onAttacked();
     },
     onCollisionStay (other, self) {
-        console.log("zombie stay");
+        
     },
 
     onCollisionExit (other, self) {
-        if(this.hp > 0){
-            this.anim.resume("zombie-walk");
-            this.zombieMove();
-        }
+        
         
     },
 
     update (dt) {
-        if(!this.stopSignal){
-            if(this.node.x <= -100){
-                this.move.stop();
-                this.anim.stop("zombie-walk");
-                this.stopSignal = true;
-            }
-        }
-        if (this.hp <= 0) {
-            this.onKilled();
-        }
+        
     },
 })

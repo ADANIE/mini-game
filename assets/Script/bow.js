@@ -17,7 +17,6 @@ var Arrow = cc.Class({
 
 
     start () {
-        this.playattack();
     },
 
     update (dt) {},

@@ -57,8 +57,8 @@
       "__type__": "TypedArray",
       "ctor": "Float64Array",
       "array": [
-        -481,
-        160,
+        90,
+        95,
         0,
         0,
         0,
@@ -146,6 +146,7 @@
     "_enabled": true,
     "attack": 10,
     "speed": 100,
+    "roadLabel": 1,
     "position": {
       "__type__": "cc.Vec2",
       "x": 0,

@@ -85,5 +85,11 @@
       ]
     }
   },
-  "events": []
+  "events": [
+    {
+      "frame": 0.8,
+      "func": "sendRecoveryMessage",
+      "params": []
+    }
+  ]
 }

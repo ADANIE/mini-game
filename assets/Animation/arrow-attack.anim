@@ -12,14 +12,24 @@
       "x": [
         {
           "frame": 0,
-          "value": -488
+          "value": 90
+        },
+        {
+          "frame": 1,
+          "value": 10
         },
         {
           "frame": 1.1,
-          "value": -568
+          "value": 90
         }
       ]
     }
   },
-  "events": []
+  "events": [
+    {
+      "frame": 1.1,
+      "func": "arrowMove",
+      "params": []
+    }
+  ]
 }
