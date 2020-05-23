@@ -34,7 +34,7 @@ var Arrow = cc.Class({
         this.schedule(()=>{
             this.node.active = false;
         },0,0,2)
-        
+        //this.desdroy();
     },
 
     start () {
@@ -48,6 +48,10 @@ var Arrow = cc.Class({
             .repeatForever()
             .start();
         }, 0, 0, 1.1);
+    },
+
+    increaseattack (num) {
+        this.attack+=num;
     },
 
     update (dt) {

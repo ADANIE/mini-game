@@ -13,14 +13,28 @@ cc.Class({
             default: null,
             type: cc.Node
         },
+        bowPrefab: cc.Prefab,
+        arrowPrefab: cc.Prefab,
+        attackspeed: 5,//用于控制射速
     },
-
+    //三路僵尸的初始生成位置，横坐标和弓的初始位置相同
     initPosition(){
         this.position = [];
         let x = (cc.winSize.width + 75)/2;
         let y = (cc.winSize.height - 100) / 2 - 275;
         for (let i = 0; i < ROADCOUNT ; ++i){
             this.position[i] = cc.v2(x,y); 
+            y -= 160;
+        }
+    },
+
+    //箭的初始生成位置
+    initarrowPosition(){
+        this.arrowposition=[];
+        let x=(cc.winSize.width - 375)/2;
+        let y=(cc.winSize.height ) / 2 -250;
+        for (let i = 0; i < ROADCOUNT ; ++i){
+            this.arrowposition[i] = cc.v2(x,y); 
             y -= 160;
         }
     },
@@ -33,6 +47,13 @@ cc.Class({
             this.zombiePool.put(zombie);
         }
         this.initPosition();
+        this.initarrowPosition();
+        this.arrowPool = new cc.NodePool();
+        for(let i = 0; i<initCount; ++i)
+        {
+            let arrow = cc.instantiate(this.arrowPrefab);
+            this.arrowPool.put(arrow);
+        }
         this.pause = false;
     },
 
@@ -42,7 +63,7 @@ cc.Class({
             apperRoad[i] = i;
         }
         for (let i = 0; i < ROADCOUNT/2; ++i) {
-            var random = Math.floor(Math.random()*ROADCOUNT);
+            var random = Math.floor(Math.random()*ROADCOUNT);//0 or 1 or 2
             let tmp = apperRoad[i];
             apperRoad[i] = apperRoad[random];
             apperRoad[random] = tmp;
@@ -60,7 +81,35 @@ cc.Class({
         }, 1, ROADCOUNT-1, 0);
     },
 
+    createArrow(parentNode)
+    {
+        let apperRoad = [];
+        for (let i = 0; i < ROADCOUNT; ++i) {
+            apperRoad[i] = i;
+        }
+        let i = 0;
+        this.schedule(()=>{
+            let arrow = this.arrowPool.get();
+            if (arrow == null){
+                arrow = cc.instantiate(this.arrowPrefab);
+            }
+            arrow.parent = parentNode;
+            //alert(4);
+            //alert(this.arrowposition);
+            //alert(this.position);
+            arrow.setPosition(this.arrowposition[apperRoad[i]]);
+            i++;
+        }, 1, ROADCOUNT-1, 0);
+    },
 
+    createArrowbytime() {
+        this.schedule(()=>{
+            if (this.pause == true) {
+                this.unscheduleAllCallbacks();
+            }
+            this.createArrow(this.node);
+        }, this.attackspeed, 1e+8, 1);
+    },
 
     // create zombie by random interval
     CreateZomByRandInt () {
@@ -90,6 +139,7 @@ cc.Class({
 
     start () {
         this.CreateZomByRandInt();
+        this.createArrowbytime();
     },
 
     update (dt) {
