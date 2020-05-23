@@ -192,7 +192,7 @@
       "array": [
         0,
         0,
-        359.4005425705421,
+        359.2616944900503,
         0,
         0,
         0,
@@ -2030,6 +2030,14 @@
     "gameOverNode": {
       "__id__": 41
     },
+    "bowPrefab": {
+      "__uuid__": "025491fe-7377-4c0f-bd56-2fb6638facc8"
+    },
+    "arrowPrefab": {
+      "__uuid__": "dd5a737e-f335-46f1-8127-c61a1639f926"
+    },
+    "attackspeed": 5,
+    "childNodes": [],
     "_id": "58lEvJkaVLyKUHQRHOXHO+"
   }
 ]

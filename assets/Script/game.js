@@ -17,6 +17,7 @@ cc.Class({
         arrowPrefab: cc.Prefab,
         attackspeed: 5,//用于控制射速
         //之后可以给每一个弓单独设置一个攻击速度，这样可以对每一个弓进行单独的升级射速的操作。
+        childNodes:[],
     },
     //三路僵尸的初始生成位置，横坐标和弓的初始位置相同
     initPosition(){
@@ -110,6 +111,7 @@ cc.Class({
 
     CreateArrow(parentNode)
     {
+
         let apperRoad = [];
         for (let i = 0; i < ROADCOUNT; ++i) {
             apperRoad[i] = i;
@@ -117,6 +119,7 @@ cc.Class({
             if (arrow == null){
                 arrow = cc.instantiate(this.arrowPrefab);
             }
+            //alert(arrow);
             arrow.parent = parentNode;
             arrow.setPosition(this.arrowposition[apperRoad[i]]);
         }
@@ -133,13 +136,14 @@ cc.Class({
         let atkspd=1/this.attackspeed;
         atkspd+=num;
         this.attackspeed=1/atkspd; 
-        alert(atkspd);
-        alert(this.attackspeed);
-        alert(recallfuc);
+        //alert(atkspd);
+        //alert(this.attackspeed);
+        //alert(recallfuc);
         this.schedule(recallfuc,this.attackspeed,1e8,0);
     },//提升攻击速度。传入参数num的单位为次/s，如0.5次/秒
 
     start () {
+        //alert(this.childNodes);
         this.CreateZomByRandInt();
         let CreateArrowByTime=this.DecoratorOfArrow;
         this.schedule(CreateArrowByTime,this.attackspeed,1e8,0);
@@ -158,6 +162,7 @@ cc.Class({
         //show gameover label
         this.gameOverNode.active = true;
         //destroy all zombies and arrows
+        alert(this.node);
     },
 
 });
