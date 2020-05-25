@@ -20,9 +20,26 @@ cc.Class({
         //之后可以给每一个弓单独设置一个攻击速度，这样可以对每一个弓进行单独的升级射速的操作。
     },
 
+    onClickStartGame () {
+        cc.find("Canvas/start_game").active = false;
+        cc.find("Canvas/road_1").getComponent(cc.Animation).play("road-appear");
+        cc.find("Canvas/road_2").getComponent(cc.Animation).play("road-appear");
+        cc.find("Canvas/road_3").getComponent(cc.Animation).play("road-appear");
+        cc.find("Canvas/header").getComponent(cc.Animation).play("header-appear");
+        this.createZomByRandInt()
+    },
 
+    onClickPauseGame () {
+        cc.director.pause();
+        cc.find("Canvas/gamePause").active = true;
+    },
 
-    init(){
+    onClickResumeGame () {
+        cc.director.resume();
+        cc.find("Canvas/gamePause").active = false;
+    },
+
+    init () {
         this.zombiePool = new cc.NodePool();
         let initCount = 50;
         for(let i = 0; i < initCount; ++i){
@@ -150,14 +167,13 @@ cc.Class({
             //console.log("arrow attacking zombie");
             this.arrowPool.put(event.target);
             event.stopPropagation();
-        })
+        });
+
     },
 
 
     start () {
-        this.createZomByRandInt();
-        //this.createArrowByTime();
-        //this.IncreaseAttackSpeed(0.1);
+        
     },
 
     update (dt) {

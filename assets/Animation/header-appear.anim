@@ -3,7 +3,7 @@
   "_name": "header-appear",
   "_objFlags": 0,
   "_native": "",
-  "_duration": 1,
+  "_duration": 0.5,
   "sample": 60,
   "speed": 1,
   "wrapMode": 1,
@@ -12,10 +12,10 @@
       "y": [
         {
           "frame": 0,
-          "value": 427.238
+          "value": 430
         },
         {
-          "frame": 1,
+          "frame": 0.5,
           "value": 310
         }
       ]

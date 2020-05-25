@@ -3,7 +3,7 @@
   "_name": "road-appear",
   "_objFlags": 0,
   "_native": "",
-  "_duration": 1,
+  "_duration": 0.5,
   "sample": 60,
   "speed": 1,
   "wrapMode": 1,
@@ -12,11 +12,11 @@
       "x": [
         {
           "frame": 0,
-          "value": -720.044
+          "value": -720
         },
         {
-          "frame": 1,
-          "value": -544.187
+          "frame": 0.5,
+          "value": -540
         }
       ]
     }
