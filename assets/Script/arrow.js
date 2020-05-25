@@ -69,7 +69,8 @@ var Arrow = cc.Class({
     },
 
     update (dt) {
-        if (this.node.x == 1280) {
+        if (this.node.x >= 1380) {
+            this.move.stop();
             this.sendMessage();
         }
     },
