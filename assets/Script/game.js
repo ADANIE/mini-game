@@ -22,14 +22,6 @@ cc.Class({
         //之后可以给每一个弓单独设置一个攻击力，这样可以对每一个弓进行单独的升级攻击力的操作。
     },
 
-    onClickStartGame () {
-        cc.find("Canvas/start_game").active = false;
-        cc.find("Canvas/road_1").getComponent(cc.Animation).play("road-appear");
-        cc.find("Canvas/road_2").getComponent(cc.Animation).play("road-appear");
-        cc.find("Canvas/road_3").getComponent(cc.Animation).play("road-appear");
-        cc.find("Canvas/header").getComponent(cc.Animation).play("header-appear");
-        this.createZomByRandInt()
-    },
 
     onClickPauseGame () {
         cc.director.pause();
@@ -43,6 +35,9 @@ cc.Class({
 
     init () {
         //this.IncreaseAttack(10,100); //(test increase attack)
+        this.attackspeed = 5;
+        this.roadHasZombie = [false, false, false];
+        this.startFindZombie = false;           // 控制hasZombie方法开始
         this.zombiePool = new cc.NodePool();
         let initCount = 50;
         for(let i = 0; i < initCount; ++i){
@@ -55,7 +50,7 @@ cc.Class({
             let arrow = cc.instantiate(this.arrowPrefab);
             this.arrowPool.put(arrow);
         }
-        this.pause = false;
+        
     },
 
     createZombie(count){
@@ -162,8 +157,6 @@ cc.Class({
     
     onLoad () {
         this.init();
-        this.roadHasZombie = [false, false, false];
-        this.startFindZombie = false;           // 控制hasZombie方法开始
         this.node.on("zombie-die", (event)=>{
             //event.active = false;
             let name = event.target.parent.name.toString();
@@ -177,12 +170,20 @@ cc.Class({
             this.arrowPool.put(event.target);
             event.stopPropagation();
         });
-
+        cc.director.once(cc.director.EVENT_AFTER_SCENE_LAUNCH, ()=>{
+            this.restart();
+        })
     },
 
 
     start () {
-        
+        cc.find('Canvas/road_1').getComponent(cc.Animation).play('road-appear')
+        cc.find('Canvas/road_2').getComponent(cc.Animation).play('road-appear')
+        cc.find('Canvas/road_3').getComponent(cc.Animation).play('road-appear')
+        cc.find('Canvas/header')
+          .getComponent(cc.Animation)
+          .play('header-appear')
+        this.createZomByRandInt()
     },
 
     update (dt) {
@@ -199,6 +200,8 @@ cc.Class({
     },
 
     gameOver () {
+        cc.director.loadScene("gameOver");
+        /*
         this.gameOverNode.active = true;
         for(let roadNum=1;roadNum<=3;roadNum++){
             let t=cc.find("Canvas/road_"+roadNum)._children.length;//删除所有僵尸，弓，箭
@@ -210,12 +213,8 @@ cc.Class({
             }
             this.roadHasZombie = [false, false, false];
         }
+        */
     },
 
-    restart (){
-        this.gameOverNode.active = false;
-        this.init();
-        this.onClickStartGame();
-    }
 });
 
