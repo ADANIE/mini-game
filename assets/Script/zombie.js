@@ -7,7 +7,7 @@ var Zombie = cc.Class({
         attack: 3,
         speed: 50,
         dodge: 10,
-        glod: 15,
+        gold: 15,
         points: 30,
         roadLabel: 1,
         position: cc.v2(0,0),
@@ -29,7 +29,7 @@ var Zombie = cc.Class({
         this.attack += times * 2;
         this.dodge += times * 0.5;
         this.points += 20;
-        this.glod += 10;
+        this.gold += 10;
     },
 
     zombieMove(){
@@ -47,6 +47,7 @@ var Zombie = cc.Class({
         this.anim.pause("zombie-walk");
         this.move.stop();
         let arrow = cc.find("Canvas/road_"+ this.roadLabel + "/arrow").getComponent("arrow");
+        //console.log(arrow.attack);
         if (arrow != null) {
             this.hp -= arrow.attack;
             this.move = cc.tween(this.node)
@@ -73,7 +74,7 @@ var Zombie = cc.Class({
         let pointsNum = cc.find("Canvas/header/points/num").getComponent(cc.Label);
         let goldNum = cc.find("Canvas/header/gold/goldCount").getComponent(cc.Label);
         pointsNum.string = parseInt(pointsNum.string) +  this.points;
-        goldNum.string = parseInt(goldNum.string)+ this.glod;
+        goldNum.string = parseInt(goldNum.string)+ this.gold;
     },
 
     sendRecoveryMessage () {

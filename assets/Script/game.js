@@ -17,7 +17,9 @@ cc.Class({
         bow3: cc.Node,
         arrowPrefab: cc.Prefab,
         attackspeed: 5,//用于控制射速
+        attack: 10,//用于控制弓的攻击力
         //之后可以给每一个弓单独设置一个攻击速度，这样可以对每一个弓进行单独的升级射速的操作。
+        //之后可以给每一个弓单独设置一个攻击力，这样可以对每一个弓进行单独的升级攻击力的操作。
     },
 
     onClickStartGame () {
@@ -40,6 +42,7 @@ cc.Class({
     },
 
     init () {
+        //this.IncreaseAttack(10,100); //(test increase attack)
         this.zombiePool = new cc.NodePool();
         let initCount = 50;
         for(let i = 0; i < initCount; ++i){
@@ -93,6 +96,7 @@ cc.Class({
         }
         arrow.parent = cc.find("Canvas/road_" + roadNum);
         arrow.roadLabel = roadNum;
+        arrow.getComponent('arrow').attack = this.attack;
         arrow.getComponent("arrow").init();
         this.playBowAttack(roadNum); 
     },
@@ -109,6 +113,11 @@ cc.Class({
         }
     },
 
+    IncreaseAttack(atk,gold){
+        let goldNum = cc.find("Canvas/header/gold/goldCount").getComponent(cc.Label);
+        goldNum.string = parseInt(goldNum.string) - gold;
+        this.attack+=atk;
+    },//参数：要提升的攻击力，需要花费的金钱
 
     IncreaseAttackSpeed(num){
         //appearInterval变量控制射击间隔，它的倒数即为射速。
@@ -189,10 +198,24 @@ cc.Class({
         this.ndoe.off("arrow-recovery");
     },
 
-    gameOver: function () {
-        //show gameover label
+    gameOver () {
         this.gameOverNode.active = true;
-        //destroy all zombies and arrows
+        for(let roadNum=1;roadNum<=3;roadNum++){
+            let t=cc.find("Canvas/road_"+roadNum)._children.length;//删除所有僵尸，弓，箭
+            //console.log(t);
+            //console.log(cc.find("Canvas/road_"+roadNum)._children);
+            for(let i=1;i<t;i++)
+            {
+                cc.find("Canvas/road_"+roadNum)._children[i].destroy();
+            }
+            this.roadHasZombie = [false, false, false];
+        }
     },
+
+    restart (){
+        this.gameOverNode.active = false;
+        this.init();
+        this.onClickStartGame();
+    }
 });
 

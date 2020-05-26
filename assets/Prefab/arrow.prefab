@@ -145,7 +145,7 @@
     },
     "_enabled": true,
     "attack": 10,
-    "speed": 100,
+    "speed": 200,
     "roadLabel": 1,
     "position": {
       "__type__": "cc.Vec2",
