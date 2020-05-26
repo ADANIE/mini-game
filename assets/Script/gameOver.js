@@ -12,6 +12,8 @@ cc.Class({
     },
 
     start () {
+        let score = cc.find("storeScore").getComponent("storeScore").score;
+        cc.log(score);
         cc.director.preloadScene("game");
     },
 

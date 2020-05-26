@@ -59,7 +59,7 @@ cc.Class({
     },
 
     submitScoreButtonFunc(){
-        let score = parseInt(cc.find("num").string);
+        let score = cc.find("storeScore").getComponent("storeScore").score;
         if (CC_WECHATGAME) {
             window.wx.postMessage({
                 messageType: 3,

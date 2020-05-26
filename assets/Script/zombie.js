@@ -73,8 +73,10 @@ var Zombie = cc.Class({
         this.hp = 0;
         let pointsNum = cc.find("Canvas/header/points/num").getComponent(cc.Label);
         let goldNum = cc.find("Canvas/header/gold/goldCount").getComponent(cc.Label);
+        let storeScore = cc.find("storeScore").getComponent("storeScore");
         pointsNum.string = parseInt(pointsNum.string) +  this.points;
         goldNum.string = parseInt(goldNum.string)+ this.gold;
+        storeScore.setScore(parseInt(pointsNum.string));
     },
 
     sendRecoveryMessage () {
