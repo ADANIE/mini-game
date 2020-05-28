@@ -1,6 +1,6 @@
 const ROADCOUNT = 3
-const MAXINTERVAL = 491 // 45
-const MININTERVAL = 400 // 20
+const MAXINTERVAL = 2 // 45
+const MININTERVAL = 1 // 20
 
 cc.Class({
   extends: cc.Component,
@@ -59,7 +59,6 @@ cc.Class({
       apperRoad[random] = tmp
     }
     let i = 0
-
     this.schedule(
       () => {
         let zombie = this.zombiePool.get()
@@ -80,7 +79,39 @@ cc.Class({
       ROADCOUNT - 1,
       0
     )
-    this.startFindZombie = true
+  },
+
+  // create zombie by random interval
+  createZomByRandInt() {
+    let count = 0
+    let appearInterval = Math.floor(
+      Math.random() * (MAXINTERVAL - MININTERVAL) + MININTERVAL
+    )
+    console.log('zombie appear')
+    let tmp_count = 0;
+    for (let i = 0; i < ROADCOUNT; i++) {
+      if(this.roadHasZombie[i]){
+        tmp_count ++;
+      }
+    }
+    if (tmp_count == 0) {
+      this.startFindZombie = true;
+    }
+    this.schedule(
+      () => {
+        if (this.pause == true) {
+          this.unscheduleAllCallbacks()
+        }
+        this.createZombie(count)
+        appearInterval = Math.floor(
+          Math.random() * (MAXINTERVAL - MININTERVAL) + MININTERVAL
+        )
+        count++
+      },
+      appearInterval,
+      1e8,
+      1
+    )
   },
 
   createArrow(roadNum) {
@@ -107,6 +138,18 @@ cc.Class({
     }
   },
 
+  // 怪物死亡后，停止释放弓箭
+  createArrowByTime() {
+    console.log('arrow begin attacking')
+    for (let i = 0; i < 3; i++) {
+      this.arrowCreateTimer[i] = setInterval(()=>{
+        if (this.roadHasZombie[i]) {
+          this.createArrow(i + 1)
+        }
+      }, this.attackSpeed[i]*1000);
+    }
+  },
+
 
   awakeLevelUpBtn (event, customEventData) {
     let levelUpBtn = cc.find("Canvas/road_" + customEventData + "/bow/levelup");
@@ -118,6 +161,7 @@ cc.Class({
       }, 5);
     }
   },
+
   attackcallback: function (event, customEventData) {
     //console.log(customEventData);
     this.IncreaseAttack(customEventData);
@@ -180,49 +224,23 @@ cc.Class({
     }, this.attackSpeed[roadLabel - 1]*1000);
   }, //提升攻击速度。传入参数num的单位为次/s，如0.5次/秒
 
-  // create zombie by random interval
-  createZomByRandInt() {
-    let count = 0
-    let appearInterval = Math.floor(
-      Math.random() * (MAXINTERVAL - MININTERVAL) + MININTERVAL
-    )
-    console.log('zombie appear')
-    this.schedule(
-      () => {
-        if (this.pause == true) {
-          this.unscheduleAllCallbacks()
-        }
-        this.createZombie(count)
-        appearInterval = Math.floor(
-          Math.random() * (MAXINTERVAL - MININTERVAL) + MININTERVAL
-        )
-        count++
-      },
-      appearInterval,
-      1e8,
-      1
-    )
-  },
 
-  // 怪物死亡后，停止释放弓箭
-  createArrowByTime() {
-    console.log('arrow begin attacking')
-    for (let i = 0; i < 3; i++) {
-      this.arrowCreateTimer[i] = setInterval(()=>{
-        if (this.roadHasZombie[i]) {
-          this.createArrow(i + 1)
-        }
-      }, this.attackSpeed[i]*1000);
+
+  
+
+  hasZombie (parent, num) {
+    let zombie = parent.getChildByName("zombie");
+    if (zombie == null) {
+      this.roadHasZombie[num - 1] = fasle;
     }
   },
-
   onLoad() {
     this.init()
     this.node.on('zombie-die', (event) => {
       //event.active = false;
       let name = event.target.parent.name.toString()
       let num = name[name.length - 1]
-      this.roadHasZombie[num - 1] = false
+      this.hasZombie(event.target.parent, num)
       this.zombiePool.put(event.target)
       event.stopPropagation()
     })
@@ -231,8 +249,9 @@ cc.Class({
       this.arrowPool.put(event.target)
       event.stopPropagation()
     })
-    cc.director.once(cc.director.EVENT_AFTER_SCENE_LAUNCH, () => {
-      this.restart()
+    this.node.on('game-over', (event) => {
+      //console.log("arrow attacking zombie");
+      this.gameOver();
     })
   },
 
@@ -247,13 +266,15 @@ cc.Class({
   update(dt) {
     if (this.startFindZombie) {
       this.createArrowByTime()
-      this.startFindZombie = false
+      this.startFindZombie = false;
     }
+
   },
 
   onDisabled() {
     this.node.off('zombie-die')
     this.ndoe.off('arrow-recovery')
+    this.node.off('game-over');
   },
 
   gameOver() {

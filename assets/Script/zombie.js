@@ -92,6 +92,11 @@ var Zombie = cc.Class({
     this.node.dispatchEvent(dieEvent)
   },
 
+  sendGameOverMsg () {
+    let dieEvent = new cc.Event.EventCustom('game-over', true)
+    this.node.dispatchEvent(dieEvent)
+  },
+
   onLoad() {
     var manager = cc.director.getCollisionManager()
     manager.enabled = true
@@ -110,5 +115,9 @@ var Zombie = cc.Class({
 
   onCollisionExit(other, self) {},
 
-  update(dt) {},
+  update(dt) {
+    if (this.node.x <= -120) {
+      this.sendGameOverMsg()
+    }
+  },
 })
