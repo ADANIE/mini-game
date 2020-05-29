@@ -13,7 +13,6 @@ var Arrow = cc.Class({
     this.node.setPosition(cc.v2(90, 95))
     this.node.opacity = 255
     this.node.group = 'arrow'
-    this.playAttack()
   },
 
   playAttack() {
@@ -55,7 +54,6 @@ var Arrow = cc.Class({
   onCollisionExit: function (other, self) {},
 
   start() {
-    this.playAttack()
   },
 
   increaseattack(num) {
@@ -63,7 +61,7 @@ var Arrow = cc.Class({
   },
 
   update(dt) {
-    if (this.node.x >= 1380) {
+    if (this.node.x >= 1100) {
       this.move.stop()
       this.sendMessage()
     }

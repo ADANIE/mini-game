@@ -23,12 +23,12 @@ var Zombie = cc.Class({
   },
 
   propertiesGrow(times) {
-    this.hp += times * 20
-    this.defense += times * 2
-    this.attack += times * 2
-    this.dodge += times * 0.5
-    this.points += 20
-    this.gold += 10
+    this.hp += times * 4
+    this.defense += times * 0.4
+    this.attack += times * 0.4
+    this.dodge += times * 0.1
+    this.points += 4
+    this.gold += 2
   },
 
   zombieMove() {
@@ -56,7 +56,6 @@ var Zombie = cc.Class({
     this.anim.pause('zombie-walk')
     this.move.stop()
     if (arrow != null) {
-      console.log(arrow.attack)
       this.hp -= arrow.attack
       this.move = cc
         .tween(this.node)
@@ -64,7 +63,11 @@ var Zombie = cc.Class({
           position: cc.v2(100, 0),
         })
         .start()
-      this.node.x += 100
+      if ((this.node.x + 100) >= 1080) {
+        this.node.x = 1080
+      } else {
+        this.node.x += 100
+      }
       if (this.hp <= 0) {
         this.onKilled()
       } else {

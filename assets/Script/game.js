@@ -1,6 +1,6 @@
 const ROADCOUNT = 3
-const MAXINTERVAL = 2 // 45
-const MININTERVAL = 1 // 20
+const MAXINTERVAL = 30 // 45
+const MININTERVAL = 20 // 20
 
 cc.Class({
   extends: cc.Component,
@@ -33,7 +33,7 @@ cc.Class({
     this.attackSpeed = [5, 5, 5] // 每条路上弓箭的攻击速度
     this.hitRate = [90, 90, 90] // 每条路上箭矢的命中率
     this.roadHasZombie = [false, false, false]
-    this.startFindZombie = false // 控制hasZombie方法开始
+    this.startFindZombie = [false, false, false] // 控制hasZombie方法开始
     this.zombiePool = new cc.NodePool()
     let initCount = 50
     for (let i = 0; i < initCount; ++i) {
@@ -47,17 +47,18 @@ cc.Class({
     }
   },
 
-  createZombie(count) {
+  createZombie(count) {  // 每次刷新出现的僵尸数量在1-3之间
     let apperRoad = []
     for (let i = 0; i < ROADCOUNT; ++i) {
       apperRoad[i] = i
     }
-    for (let i = 0; i < ROADCOUNT / 2; ++i) {
+    for (let i = 0; i < 2; ++i) {
       var random = Math.floor(Math.random() * ROADCOUNT) //0 or 1 or 2
       let tmp = apperRoad[i]
       apperRoad[i] = apperRoad[random]
       apperRoad[random] = tmp
     }
+    let zombieNum = Math.floor(Math.random() * ROADCOUNT + 1) // 1 or 2 or 3
     let i = 0
     this.schedule(
       () => {
@@ -71,37 +72,32 @@ cc.Class({
         this.roadHasZombie[roadNum - 1] = true
         zombie.parent = cc.find('Canvas/road_' + roadNum)
         zombieJS.roadLabel = roadNum
-        zombieJS.propertiesGrow(count)
-
+        zombieJS.zombieMove();
+        if (count % 5 == 0) {
+          zombieJS.propertiesGrow(count);
+        }
         i++
       },
       1,
-      ROADCOUNT - 1,
+      zombieNum - 1,
       0
     )
+    
   },
 
-  // create zombie by random interval
-  createZomByRandInt() {
+  
+  createZomByRandInt() { // create zombie by random interval
     let count = 0
     let appearInterval = Math.floor(
       Math.random() * (MAXINTERVAL - MININTERVAL) + MININTERVAL
     )
-    console.log('zombie appear')
-    let tmp_count = 0;
     for (let i = 0; i < ROADCOUNT; i++) {
-      if(this.roadHasZombie[i]){
-        tmp_count ++;
+      if(!this.roadHasZombie[i]){
+        this.startFindZombie[i] = true;
       }
-    }
-    if (tmp_count == 0) {
-      this.startFindZombie = true;
     }
     this.schedule(
       () => {
-        if (this.pause == true) {
-          this.unscheduleAllCallbacks()
-        }
         this.createZombie(count)
         appearInterval = Math.floor(
           Math.random() * (MAXINTERVAL - MININTERVAL) + MININTERVAL
@@ -112,6 +108,7 @@ cc.Class({
       1e8,
       1
     )
+    
   },
 
   createArrow(roadNum) {
@@ -119,9 +116,11 @@ cc.Class({
     if (arrow == null) {
       arrow = cc.instantiate(this.arrowPrefab)
     }
-    arrow.parent = cc.find('Canvas/road_' + roadNum)
+    
     let arrowJS = arrow.getComponent('arrow')
     arrowJS.init()
+    arrow.parent = cc.find('Canvas/road_' + roadNum)
+    arrowJS.playAttack()
     arrowJS.roadLabel = roadNum
     arrowJS.attack = this.arrowAttack[roadNum - 1]
     arrowJS.hitRate = this.hitRate[roadNum - 1]
@@ -139,15 +138,16 @@ cc.Class({
   },
 
   // 怪物死亡后，停止释放弓箭
-  createArrowByTime() {
-    console.log('arrow begin attacking')
-    for (let i = 0; i < 3; i++) {
-      this.arrowCreateTimer[i] = setInterval(()=>{
-        if (this.roadHasZombie[i]) {
-          this.createArrow(i + 1)
-        }
-      }, this.attackSpeed[i]*1000);
-    }
+  createArrowByTime(i) {
+    this.arrowCreateTimer[i] = setInterval(()=>{
+      if (this.roadHasZombie[i]) {
+        this.createArrow(i + 1)
+      }
+      //console.log(cc.find("Canvas/road_1").children);
+      //console.log(cc.find("Canvas/road_2").children);
+      //console.log(cc.find("Canvas/road_3").children);
+    }, this.attackSpeed[i]*1000);
+    
   },
 
 
@@ -226,22 +226,17 @@ cc.Class({
 
 
 
-  
-
-  hasZombie (parent, num) {
-    let zombie = parent.getChildByName("zombie");
-    if (zombie == null) {
-      this.roadHasZombie[num - 1] = fasle;
-    }
-  },
   onLoad() {
     this.init()
     this.node.on('zombie-die', (event) => {
       //event.active = false;
-      let name = event.target.parent.name.toString()
+      let parent = event.target.parent;
+      let name = parent.name.toString()
       let num = name[name.length - 1]
-      this.hasZombie(event.target.parent, num)
       this.zombiePool.put(event.target)
+      if (parent.getChildByName("zombie") == null){
+        this.roadHasZombie[num - 1] = false;
+      }
       event.stopPropagation()
     })
     this.node.on('arrow-recovery', (event) => {
@@ -264,10 +259,13 @@ cc.Class({
   },
 
   update(dt) {
-    if (this.startFindZombie) {
-      this.createArrowByTime()
-      this.startFindZombie = false;
+    for (let i = 0; i < ROADCOUNT; i++) {
+      if (this.startFindZombie[i]) {
+        this.createArrowByTime(i)
+        this.startFindZombie[i] = false
+      }
     }
+    
 
   },
 
