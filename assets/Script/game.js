@@ -1,5 +1,5 @@
 const ROADCOUNT = 3
-const MAXINTERVAL = 30 // 45
+const MAXINTERVAL = 45 // 45
 const MININTERVAL = 20 // 20
 
 cc.Class({
@@ -18,12 +18,20 @@ cc.Class({
   },
 
   onClickPauseGame() {
+    for (let i = 0; i < 3; i++) {
+      clearInterval(this.arrowCreateTimer[i]);
+    }
+    this.unscheduleAllCallbacks();
     cc.director.pause()
     cc.find('Canvas/gamePause').active = true
   },
 
   onClickResumeGame() {
     cc.director.resume()
+    this.createZomByRandInt();
+    for (let i = 0; i < ROADCOUNT; i++) {
+      this.createArrowByTime(i)
+    }
     cc.find('Canvas/gamePause').active = false
   },
 
